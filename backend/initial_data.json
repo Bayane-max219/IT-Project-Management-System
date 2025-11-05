@@ -1,0 +1,184 @@
+[
+  {
+    "model": "authentication.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "email": "admin@company.com",
+      "first_name": "Admin",
+      "last_name": "System",
+      "role": "admin",
+      "phone": "+261 34 12 345 67",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true,
+      "password": "pbkdf2_sha256$600000$admin123"
+    }
+  },
+  {
+    "model": "authentication.user",
+    "pk": 2,
+    "fields": {
+      "username": "dev1",
+      "email": "rakoto@company.com",
+      "first_name": "Jean",
+      "last_name": "Rakoto",
+      "role": "developer",
+      "phone": "+261 34 11 111 11",
+      "is_active": true,
+      "password": "pbkdf2_sha256$600000$dev123"
+    }
+  },
+  {
+    "model": "authentication.user",
+    "pk": 3,
+    "fields": {
+      "username": "dev2",
+      "email": "rabe@company.com",
+      "first_name": "Marie",
+      "last_name": "Rabe",
+      "role": "developer",
+      "phone": "+261 34 22 222 22",
+      "is_active": true,
+      "password": "pbkdf2_sha256$600000$dev123"
+    }
+  },
+  {
+    "model": "authentication.user",
+    "pk": 4,
+    "fields": {
+      "username": "client1",
+      "email": "client@example.com",
+      "first_name": "Paul",
+      "last_name": "Martin",
+      "role": "client",
+      "phone": "+261 34 33 333 33",
+      "is_active": true,
+      "password": "pbkdf2_sha256$600000$client123"
+    }
+  },
+  {
+    "model": "authentication.user",
+    "pk": 5,
+    "fields": {
+      "username": "client2",
+      "email": "entreprise@example.com",
+      "first_name": "Sophie",
+      "last_name": "Dubois",
+      "role": "client",
+      "phone": "+261 34 44 444 44",
+      "is_active": true,
+      "password": "pbkdf2_sha256$600000$client123"
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 1,
+    "fields": {
+      "name": "Site E-commerce",
+      "description": "Développement d'une plateforme e-commerce complète avec système de paiement intégré",
+      "client": 4,
+      "project_manager": 2,
+      "status": "in_progress",
+      "priority": "high",
+      "start_date": "2024-10-01",
+      "end_date": "2024-12-15",
+      "budget": "15000.00",
+      "progress": 35
+    }
+  },
+  {
+    "model": "projects.project",
+    "pk": 2,
+    "fields": {
+      "name": "Application Mobile",
+      "description": "Application mobile de gestion des stocks pour entreprise",
+      "client": 5,
+      "project_manager": 3,
+      "status": "planning",
+      "priority": "medium",
+      "start_date": "2024-11-01",
+      "end_date": "2025-02-28",
+      "budget": "12000.00",
+      "progress": 10
+    }
+  },
+  {
+    "model": "projects.projectteam",
+    "pk": 1,
+    "fields": {
+      "project": 1,
+      "developer": 2,
+      "role_in_project": "Chef de projet"
+    }
+  },
+  {
+    "model": "projects.projectteam",
+    "pk": 2,
+    "fields": {
+      "project": 1,
+      "developer": 3,
+      "role_in_project": "Développeur Frontend"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "title": "Conception de la base de données",
+      "description": "Créer le schéma de base de données pour le système e-commerce",
+      "project": 1,
+      "assigned_to": 2,
+      "created_by": 1,
+      "status": "completed",
+      "priority": "high",
+      "estimated_hours": "16.00",
+      "actual_hours": "18.50",
+      "start_date": "2024-10-01",
+      "due_date": "2024-10-05"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 3,
+    "fields": {
+      "title": "Système d'authentification",
+      "description": "Implémenter le système de connexion/inscription utilisateurs",
+      "project": 1,
+      "assigned_to": 2,
+      "created_by": 1,
+      "status": "todo",
+      "priority": "high",
+      "estimated_hours": "20.00",
+      "start_date": "2024-10-15",
+      "due_date": "2024-10-25"
+    }
+  },
+  {
+    "model": "tasks.task",
+    "pk": 2,
+    "fields": {
+      "title": "Interface utilisateur - Page d'accueil",
+      "description": "Développer l'interface de la page d'accueil avec design responsive",
+      "project": 1,
+      "assigned_to": 3,
+      "created_by": 1,
+      "status": "in_progress",
+      "priority": "medium",
+      "estimated_hours": "24.00",
+      "start_date": "2024-10-08",
+      "due_date": "2024-10-18"
+    }
+  },
+  {
+    "model": "pointage.pointagesettings",
+    "pk": 1,
+    "fields": {
+      "expected_arrival_time": "08:00:00",
+      "expected_departure_time": "17:00:00",
+      "break_duration_minutes": 60,
+      "tolerance_minutes": 15,
+      "working_days": "1,2,3,4,5"
+    }
+  }
+]

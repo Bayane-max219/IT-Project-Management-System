@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre compte IT Project Manager</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 300;
+        }
+        .header .subtitle {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .welcome-text {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .credentials-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            color: white;
+        }
+        .credentials-box h3 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .credentials-box .icon {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        .credential-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 12px 15px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        .credential-item .label {
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 120px;
+        }
+        .credential-item .value {
+            font-family: 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 5px 10px;
+            border-radius: 3px;
+            flex: 1;
+        }
+        .login-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            transition: transform 0.2s;
+        }
+        .login-button:hover {
+            transform: translateY(-2px);
+        }
+        .security-notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        .security-notice .icon {
+            color: #f39c12;
+            margin-right: 8px;
+        }
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .footer .company {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .tech-pattern {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23ffffff" opacity="0.1"/><circle cx="20" cy="20" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="80" cy="80" r="1" fill="%23ffffff" opacity="0.1"/></svg>');
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header tech-pattern">
+            <h1>🚀 IT Project Manager</h1>
+            <p class="subtitle">Plateforme de Gestion de Projets IT</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="welcome-text">
+                <strong>Bonjour {{ user.first_name }} {{ user.last_name }},</strong>
+            </div>
+            
+            <p>Félicitations ! Votre compte <strong>{{ user.get_role_display }}</strong> a été créé avec succès sur notre plateforme IT Project Manager.</p>
+            
+            <p>Vous pouvez maintenant accéder à tous les outils de gestion de projets, de tâches et de collaboration de notre équipe.</p>
+
+            <!-- Credentials Box -->
+            <div class="credentials-box">
+                <h3><span class="icon">🔐</span> Vos Identifiants de Connexion</h3>
+                
+                <div class="credential-item">
+                    <span class="label">📧 Email :</span>
+                    <span class="value">{{ user.email }}</span>
+                </div>
+                
+                <div class="credential-item">
+                    <span class="label">🔑 Mot de passe :</span>
+                    <span class="value">{{ password }}</span>
+                </div>
+                
+                <div class="credential-item">
+                    <span class="label">👤 Rôle :</span>
+                    <span class="value">{{ user.get_role_display }}</span>
+                </div>
+            </div>
+
+            <!-- Login Button -->
+            <div style="text-align: center;">
+                <a href="{{ login_url }}" class="login-button">
+                    🚀 Se Connecter Maintenant
+                </a>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="security-notice">
+                <strong><span class="icon">⚠️</span> Important :</strong>
+                Pour votre sécurité, veuillez changer votre mot de passe lors de votre première connexion.
+            </div>
+
+            <p>Si vous avez des questions ou besoin d'aide, n'hésitez pas à contacter notre équipe technique.</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="company">IT Project Manager</div>
+            <div>Équipe de Développement & Innovation</div>
+            <div style="margin-top: 10px; font-size: 12px; opacity: 0.8;">
+                © 2024 - Plateforme de Gestion de Projets IT
+            </div>
+        </div>
+    </div>
+</body>
+</html>

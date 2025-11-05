@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test API Pointage Direct</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { background: #f0f0f0; padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .error { background: #ffebee; color: #c62828; }
+        .success { background: #e8f5e9; color: #2e7d32; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔍 TEST DIRECT API POINTAGE</h1>
+    <button onclick="testAPI()">Tester l'API Pointage Stats</button>
+    <button onclick="testDashboard()">Tester Dashboard API</button>
+    
+    <div id="results"></div>
+
+    <script>
+        const API_BASE = 'http://127.0.0.1:8000/api';
+        
+        async function testAPI() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="result">🔄 Test en cours...</div>';
+            
+            try {
+                // Récupérer le token depuis localStorage
+                const token = localStorage.getItem('token');
+                
+                const response = await fetch(`${API_BASE}/pointage/stats/`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                results.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ API POINTAGE STATS RÉUSSIE</h3>
+                        <p><strong>Total employés:</strong> ${data.total_employees}</p>
+                        <p><strong>Présents aujourd'hui:</strong> ${data.present_today}</p>
+                        <p><strong>En retard:</strong> ${data.late_today}</p>
+                        <p><strong>Taux présence:</strong> ${data.attendance_rate}%</p>
+                        <p><strong>Employés en retard:</strong> ${data.late_employees?.length || 0}</p>
+                        <details>
+                            <summary>Données complètes</summary>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+                
+            } catch (error) {
+                results.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ ERREUR API</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        async function testDashboard() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="result">🔄 Test Dashboard en cours...</div>';
+            
+            try {
+                const token = localStorage.getItem('token');
+                
+                // Tester toutes les APIs du dashboard
+                const [projectStats, taskStats, pointageStats, users] = await Promise.all([
+                    fetch(`${API_BASE}/projects/stats/`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }).then(r => r.json()),
+                    fetch(`${API_BASE}/tasks/stats/`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }).then(r => r.json()),
+                    fetch(`${API_BASE}/pointage/stats/`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }).then(r => r.json()),
+                    fetch(`${API_BASE}/auth/users/`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    }).then(r => r.json())
+                ]);
+                
+                results.innerHTML = `
+                    <div class="result success">
+                        <h3>✅ DASHBOARD APIs RÉUSSIES</h3>
+                        <h4>Pointage Stats (même API):</h4>
+                        <p><strong>Total employés:</strong> ${pointageStats.total_employees}</p>
+                        <p><strong>Présents:</strong> ${pointageStats.present_today}</p>
+                        <p><strong>En retard:</strong> ${pointageStats.late_today}</p>
+                        <p><strong>Taux:</strong> ${pointageStats.attendance_rate}%</p>
+                        
+                        <details>
+                            <summary>Toutes les données Dashboard</summary>
+                            <pre>Projects: ${JSON.stringify(projectStats, null, 2)}</pre>
+                            <pre>Tasks: ${JSON.stringify(taskStats, null, 2)}</pre>
+                            <pre>Pointage: ${JSON.stringify(pointageStats, null, 2)}</pre>
+                            <pre>Users: ${JSON.stringify(users, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+                
+            } catch (error) {
+                results.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ ERREUR DASHBOARD</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
