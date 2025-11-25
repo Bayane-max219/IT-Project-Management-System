@@ -5,20 +5,26 @@ Application web complète de gestion de projets IT avec système de pointage des
 
 ## 🖼️ Aperçu du projet
 
-### Dashboard Admin
-![Dashboard Admin](screenshots/02-admin-dashboard.png)
+### 01 – Page de connexion (Login)
+![01 – Login](screenshots/01-login.png)
 
-### Gestion des Utilisateurs
-![Gestion Utilisateurs](screenshots/03-users-management.png)
+### 02 – Dashboard Administrateur
+![02 – Admin Dashboard](screenshots/02-admin-dashboard.png)
 
-### Gestion des Projets
-![Gestion Projets](screenshots/04-projects-management.png)
+### 03 – Gestion des utilisateurs
+![03 – Users Management](screenshots/03-users-management.png)
 
-### Gestion des Tâches
-![Gestion Tâches](screenshots/05-tasks-management.png)
+### 04 – Gestion des projets
+![04 – Projects Management](screenshots/04-projects-management.png)
 
-### Statistiques de Pointage
-![Statistiques Pointage](screenshots/06-pointage-stats.png)
+### 05 – Gestion des tâches
+![05 – Tasks Management](screenshots/05-tasks-management.png)
+
+### 06 – Statistiques de pointage
+![06 – Pointage Stats](screenshots/06-pointage-stats.png)
+
+### 07 – Dashboard développeur
+![07 – Developer Dashboard](screenshots/07-developer-dashboard.png)
 
 *Plus de captures d'écran disponibles dans le dossier [screenshots/](screenshots/)*
 
