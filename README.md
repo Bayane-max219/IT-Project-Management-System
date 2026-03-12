@@ -46,6 +46,18 @@ Application web complète de gestion de projets IT avec système de pointage des
 - Node.js 16+
 - PostgreSQL 12+
 
+### Lancement avec Docker (recommandé)
+```bash
+docker compose up -d --build
+docker compose exec backend python manage.py migrate
+docker compose exec backend python manage.py createsuperuser
+```
+
+Accès:
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- Admin Django: http://localhost:8000/admin
+
 ### Backend (Django)
 ```bash
 cd backend
