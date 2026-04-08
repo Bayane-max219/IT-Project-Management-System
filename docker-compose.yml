@@ -1,49 +1,71 @@
+version: "3.9"
+
 services:
+  # ─── PostgreSQL Database ───────────────────────────────────────────────────
   db:
-    image: postgres:15
+    image: postgres:15-alpine
+    container_name: itpm_db
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_NAME:-it_project_management}
       POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - itpm_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-it_project_management}"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+  # ─── Django REST API (Gunicorn) ────────────────────────────────────────────
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
+    container_name: itpm_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
-      SECRET_KEY: ${SECRET_KEY:-django-insecure-your-secret-key-here}
-      DEBUG: ${DEBUG:-True}
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-docker-secret-key-change-in-production}
+      DEBUG: "False"
       ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,0.0.0.0,backend}
       DB_NAME: ${DB_NAME:-it_project_management}
       DB_USER: ${DB_USER:-postgres}
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
-      DB_HOST: ${DB_HOST:-db}
-      DB_PORT: ${DB_PORT:-5432}
-      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-your-email@gmail.com}
-      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-your-app-password}
+      DB_HOST: db
+      DB_PORT: 5432
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-noreply@example.com}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
+    volumes:
+      - media_data:/app/media
+    networks:
+      - itpm_network
     ports:
       - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
 
+  # ─── React SPA (servi par Nginx) ───────────────────────────────────────────
   frontend:
     build:
       context: ./frontend
-    environment:
-      REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:8000/api}
+      dockerfile: Dockerfile
+    container_name: itpm_frontend
+    restart: unless-stopped
+    networks:
+      - itpm_network
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - backend
 
+networks:
+  itpm_network:
+    driver: bridge
+
 volumes:
   postgres_data:
+  media_data:
